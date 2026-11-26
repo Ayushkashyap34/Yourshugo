@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>YourShugo — a guardian for your parents, and peace of mind for you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF4E6;--card:#FFFDF8;--ink:#2B2620;--muted:#6B6353;--line:#D8C9A8;--teal:#1B4B43;--head:#123832;--gold:#E8A33D;--soft:#F3CD8C;--coral:#C85A3B;--ok:#2E7D5B;--on:#FFFDF8;--warn:#FBEAE3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16201E;--card:#1F2B28;--ink:#F1EADB;--muted:#A9B3AD;--line:#33433F;--teal:#3E8C7E;--head:#CFE6DF;--soft:#4A3A1C;--coral:#E07A5C;--ok:#5CC08F;--on:#0F1A18;--warn:#3A2620;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#16201E;--card:#1F2B28;--ink:#F1EADB;--muted:#A9B3AD;--line:#33433F;--teal:#3E8C7E;--head:#CFE6DF;--soft:#4A3A1C;--coral:#E07A5C;--ok:#5CC08F;--on:#0F1A18;--warn:#3A2620;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:500;color:var(--head);margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px 56px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 0;flex-wrap:wrap}
+.logo{font:600 22px Fraunces,Georgia,serif;color:var(--head);cursor:pointer}.logo i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--gold);margin-right:8px}
+.seg{display:flex;border:1px solid var(--line);border-radius:100px;background:var(--card);padding:3px}
+.seg button{border:none;background:none;color:var(--muted);padding:8px 14px;border-radius:100px;font:600 14px Inter,sans-serif;cursor:pointer}
+.seg button.on{background:var(--teal);color:var(--on)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+.hero{background:var(--teal);color:var(--on);border:none}
+.hero h1{color:var(--on);font-size:30px;line-height:1.2}.hero p{margin:6px 0 0;opacity:.88}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.tile{background:rgba(255,255,255,.14);border-radius:12px;padding:12px 14px}.tile b{display:block;font-size:20px}.tile span{font-size:13px;opacity:.88}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{border:none;border-radius:10px;padding:11px 18px;font:600 15px Inter,sans-serif;cursor:pointer;background:var(--teal);color:var(--on)}
+.btn.ghost{background:transparent;color:var(--head);border:1px solid var(--line)}
+.btn.sm{padding:8px 14px;font-size:14px}.btn:disabled{opacity:.6;cursor:default}
+.hero .btn{background:var(--gold);color:#2B2620}.hero .btn.ghost{background:transparent;color:var(--on);border:1px solid rgba(255,255,255,.45)}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}.grid>div{min-width:0}
+h2{font-size:21px;margin-bottom:4px}.sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.item{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--line);align-items:flex-start}.item:first-of-type{border-top:none}
+.ico{flex:none;width:36px;height:36px;border-radius:9px;background:var(--soft);display:flex;align-items:center;justify-content:center}
+.item .t{flex:1;min-width:0}.item b{display:block}.item small{color:var(--muted);font-size:14px}
+.save{color:var(--ok);font-weight:600;font-size:13px}
+.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:700;padding:3px 10px;border-radius:100px;white-space:nowrap}
+.pill.ok{background:var(--ok);color:var(--on)}.pill.wait{background:var(--soft);color:var(--ink)}
+.big{font:600 34px Fraunces,Georgia,serif;color:var(--ok)}
+.log{max-height:240px;overflow-y:auto}.log div{padding:8px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}.log div:first-child{border-top:none}.log b{color:var(--ink)}
+.note{font-size:13px;color:var(--muted);background:var(--warn);border-radius:10px;padding:10px 12px;margin-top:10px}
+.urgent{background:var(--warn);border:1.5px solid var(--coral);border-radius:14px;padding:16px;margin-top:14px}
+select,input[type=text]{width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:16px Inter,sans-serif;margin-bottom:10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--head);border-radius:100px;padding:8px 14px;font:600 14px Inter,sans-serif;cursor:pointer}
+.prow{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line)}.prow:first-of-type{border-top:none}
+.best{color:var(--ok);font-weight:700}
+.coupon{background:var(--soft);color:var(--ink);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:14px}
+.pick{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--line)}
+.senior{font-size:18px}.senior .btn{font-size:17px;padding:14px 20px}.senior .sub{font-size:15px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.two .card{margin:0;cursor:pointer}.two .card:hover{border-color:var(--teal)}
+.pts{list-style:none;padding:0;margin:12px 0 0}.pts li{padding:6px 0;color:var(--muted);font-size:15px}
+.hide{display:none}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--head);color:var(--bg);padding:12px 20px;border-radius:12px;font-size:15px;opacity:0;pointer-events:none;transition:.2s;max-width:90%;text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%)}
+@media(max-width:780px){.grid,.two{grid-template-columns:1fr}.tiles{grid-template-columns:1fr}.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo" onclick="show('home')"><i></i>YourShugo</div>
+  <div class="seg" id="seg"><button data-v="home" class="on">Home</button><button data-v="senior">Kamala’s app</button><button data-v="family">Ravi’s dashboard</button></div>
+</header>
+
+<!-- HOME -->
+<section id="v-home">
+  <div class="card hero" style="padding:32px">
+    <h1>Someone who remembers, so you don’t have to worry.</h1>
+    <p>One AI guardian, two screens: a simple app for your parent, and a calm dashboard for you. Everything one does shows up for the other.</p>
+  </div>
+  <div class="two">
+    <div class="card" onclick="show('senior')">
+      <h2>I’m a senior</h2><p class="sub">Large, simple, and nothing is bought without a confirmation.</p>
+      <ul class="pts"><li>✓ Say what you need: groceries, medicines, a doctor</li><li>✓ Prices and coupons checked for you</li><li>✓ Family kept in the loop</li></ul>
+      <div class="row"><button class="btn">Open Kamala’s app →</button></div>
+    </div>
+    <div class="card" onclick="show('family')">
+      <h2>I care for a parent</h2><p class="sub">Stop being the unpaid project manager from another city.</p>
+      <ul class="pts"><li>✓ See today at a glance</li><li>✓ Approve orders and bookings in one tap</li><li>✓ Track what you saved</li></ul>
+      <div class="row"><button class="btn">Open Ravi’s dashboard →</button></div>
+    </div>
+  </div>
+  <div class="note" style="margin-top:16px">Try the link: ask for something in Kamala’s app, then switch to Ravi’s dashboard. It will be waiting for his OK.</div>
+</section>
+
+<!-- SENIOR -->
+<section id="v-senior" class="hide senior">
+  <div class="card hero"><h1>Good morning, Kamala</h1><p>Thursday · Tell YourShugo what you need. Nothing is ordered without Ravi’s OK.</p></div>
+  <div class="card">
+    <h2>What do you need today?</h2>
+    <p class="sub">An item, or a problem like “my knee hurts”.</p>
+    <input type="text" id="need" placeholder="e.g. rice 5kg, or my knee has been hurting" onkeydown="if(event.key==='Enter')find()">
+    <div class="chips">
+      <button class="chip" onclick="fill('Rice 5kg')">🍚 Rice 5kg</button>
+      <button class="chip" onclick="fill('Paracetamol 650mg')">💊 Paracetamol</button>
+      <button class="chip" onclick="fill('My knee has been hurting')">🦴 Knee pain</button>
+      <button class="chip" onclick="fill('Suggest a school for my grandson')">🎒 School</button>
+    </div>
+    <button class="btn" onclick="find()">Find it for me</button>
+    <div id="res"></div>
+  </div>
+  <div class="card"><h2>Today</h2><p class="sub">Your list, updated live.</p><div id="tasks"></div></div>
+</section>
+
+<!-- FAMILY -->
+<section id="v-family" class="hide">
+  <div class="card hero" id="fhero">
+    <h1 id="fh">Kamala is doing fine today</h1><p id="fs"></p>
+    <div class="tiles">
+      <div class="tile"><b id="tMeds">1 of 2</b><span>medicines taken</span></div>
+      <div class="tile"><b id="tChk">8:12 AM</b><span>last check-in</span></div>
+      <div class="tile"><b id="tPend">0</b><span>waiting for your OK</span></div>
+    </div>
+    <div class="row">
+      <button class="btn" onclick="toast('Calling Kamala…')">📞 Call Kamala</button>
+      <button class="btn ghost" id="clearAlert" onclick="clearAlert()" style="display:none">Mark as handled</button>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="card"><h2>Needs your OK</h2><p class="sub">YourShugo never spends, cancels or books without you.</p><div id="apps"></div></div>
+      <div class="card"><h2>Activity</h2><p class="sub">Everything done on Kamala’s behalf.</p><div class="log" id="log"></div></div>
+    </div>
+    <div>
+      <div class="card"><h2>Saved this month</h2><div class="big" id="saved">₹640</div><p class="sub">by price checks, coupons and cancelled renewals</p></div>
+      <div class="card">
+        <h2>Request for Kamala</h2><p class="sub">She will see it on her screen.</p>
+        <select id="rt"><option>Groceries</option><option>Medicine refill</option><option>Doctor visit</option><option>Home help</option></select>
+        <input type="text" id="rx" placeholder="e.g. 10kg atta, or eye check-up">
+        <button class="btn" onclick="famReq()">Send to Kamala</button>
+      </div>
+      <div class="note">⚕️ YourShugo compares prices and tracks reminders. It does not give medical advice.</div>
+    </div>
+  </div>
+</section>
+</div>
+<div id="toast"></div>
+
+<script>
+var S={saved:640,meds:1,alert:false,chk:"8:12 AM",nid:10,
+apps:[{id:1,ico:"💊",t:"BP medicine refill",d:"City Pharmacy ₹215 → Anand Stores ₹180, same brand",save:35},{id:2,ico:"📺",t:"Cancel streaming plan",d:"Renews in 4 days. Not opened in 60 days.",save:199}],
+tasks:[{ico:"💊",t:"Evening tablet · 8:00 PM",s:"Tap when taken",st:"wait",med:1},{ico:"🧺",t:"Weekly groceries",s:"Delivered 8:05 AM · ₹340",st:"ok"},{ico:"📅",t:"Dr. Iyer check-up",s:"Tomorrow 4:00 PM · cab booked",st:"ok"}],
+logs:[["8:12 AM","Kamala took her morning tablet"],["8:05 AM","Groceries delivered, same price as last week"]]},R=[];
+function $(i){return document.getElementById(i)}
+function now(){return new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}
+function toast(m){var t=$("toast");t.textContent=m;t.className="on";clearTimeout(t._h);t._h=setTimeout(function(){t.className=""},2300)}
+function log(m){S.logs.unshift([now(),m])}
+function show(v){["home","senior","family"].forEach(function(x){$("v-"+x).className=x===v?(x==="senior"?"senior":""):"hide"});
+ document.querySelectorAll("#seg button").forEach(function(b){b.className=b.dataset.v===v?"on":""});window.scrollTo(0,0);render()}
+document.querySelectorAll("#seg button").forEach(function(b){b.onclick=function(){show(b.dataset.v)}});
+
+var URG=/chest pain|can'?t breathe|difficulty breathing|breathless|severe bleeding|sudden weakness|face droop|slurred|fainted|unconscious|stroke/i;
+var SPEC=[[/knee|joint|back pain|shoulder|bone|hip/i,"Orthopedist"],[/fever|cold|cough|flu|body ache|tired/i,"General Physician"],[/tooth|teeth|gum/i,"Dentist"],[/eye|vision|blurry/i,"Ophthalmologist"],[/skin|rash|itch/i,"Dermatologist"],[/sugar|diabet/i,"Endocrinologist"],[/heart|palpitation|blood pressure|\bbp\b/i,"Cardiologist"]];
+var DOCS={Orthopedist:[["Dr. Meena Raghavan","4.8","1.2 km","Today 5:30 PM"],["Dr. Arvind Kumar","4.6","2.5 km","Tomorrow 10:00 AM"]],"General Physician":[["Dr. Priya Shankar","4.9","0.8 km","Today 4:00 PM"],["Dr. Suresh Babu","4.7","1.6 km","Today 6:15 PM"]],Dentist:[["Dr. Kavya Nair","4.7","1.9 km","Tomorrow 11:00 AM"]],Ophthalmologist:[["Dr. Ramesh Iyer","4.8","2.1 km","Tomorrow 9:30 AM"]],Dermatologist:[["Dr. Anjali Menon","4.6","1.4 km","Today 7:00 PM"]],Endocrinologist:[["Dr. Vikram Rao","4.9","2.8 km","Tomorrow 12:00 PM"]],Cardiologist:[["Dr. Lakshmi Venkat","4.9","3.0 km","Tomorrow 3:00 PM"]]};
+var SCH=[["Green Valley Public School","4.5","2.1 km","CBSE · Grades 1–10"],["St. Xavier’s Matriculation","4.7","3.4 km","State board · Grades 1–12"]];
+var MED=/tablet|mg\b|medicine|syrup|refill|paracetamol|strip|capsule/i;
+
+function fill(t){$("need").value=t}
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function find(){
+ var q=$("need").value.trim();if(!q){$("need").focus();return}
+ R=[];var h="";
+ if(URG.test(q)){
+  h='<div class="urgent"><b>🚨 This could need urgent attention.</b><p style="margin:6px 0 0">Please call <b>112</b> or go to the nearest hospital now. Don’t wait for an appointment.</p><div class="row"><button class="btn" onclick="sos(this)">📞 Alert my family now</button></div></div>'}
+ else{
+  var sp=null;SPEC.forEach(function(s){if(!sp&&s[0].test(q))sp=s[1]});
+  if(sp){
+   h='<p class="sub" style="margin-top:16px">This sounds like one for a <b>'+sp+'</b>. That’s a suggestion, not a diagnosis.</p>';
+   DOCS[sp].forEach(function(d){R.push({ico:"📅",t:"Book "+d[0],d:sp+", "+d[3]+", "+d[2]+" away",save:0});
+    h+='<div class="pick"><div><b>'+d[0]+'</b><br><small>★ '+d[1]+' · '+d[2]+' · next: '+d[3]+'</small></div><button class="btn sm" onclick="pick('+(R.length-1)+',this)">Book for me</button></div>'})}
+  else if(/school|admission/i.test(q)){
+   h='<p class="sub" style="margin-top:16px">Schools near you:</p>';
+   SCH.forEach(function(d){R.push({ico:"🎒",t:"Enquire at "+d[0],d:d[3]+", "+d[2]+" away",save:0});
+    h+='<div class="pick"><div><b>'+d[0]+'</b><br><small>'+d[3]+' · ★ '+d[1]+' · '+d[2]+'</small></div><button class="btn sm" onclick="pick('+(R.length-1)+',this)">Enquire for me</button></div>'})}
+  else{
+   var n=0;for(var i=0;i<q.length;i++)n+=q.charCodeAt(i);var b=30+n%300,p=[Math.round(b*1.12),b,Math.round(b*1.06)],med=MED.test(q);
+   var st=med?["City Pharmacy","Anand Stores","QuickMart App"]:["City Mart","Anand Stores","QuickMart App"],off=Math.max(2,Math.round(b*.06)),title=q.charAt(0).toUpperCase()+q.slice(1);
+   h='<p class="sub" style="margin-top:16px">Prices for <b>'+esc(title)+'</b>:</p>';
+   st.forEach(function(s,i){h+='<div class="prow"><span>'+s+(i===1?' <span class="best">· Cheapest</span>':'')+'</span><b'+(i===1?' class="best"':'')+'>₹'+p[i]+'</b></div>'});
+   h+='<div class="coupon">🏷️ Coupon found: <b>₹'+off+' off</b> at Anand Stores</div>';
+   if(med)h+='<div class="note">⚕️ Not medical advice. Please confirm the brand and dose with your doctor or pharmacist.</div>';
+   R.push({ico:med?"💊":"🧺",t:"Order "+title+" from Anand Stores",d:"₹"+(b-off)+" after coupon (₹"+(p[0]-(b-off))+" less than the dearest)",save:p[0]-(b-off)});
+   h+='<div class="row"><button class="btn" onclick="pick(0,this)">Order from Anand Stores</button></div>'}}
+ $("res").innerHTML=h;
+}
+function pick(i,btn){
+ var r=R[i],id=++S.nid;btn.disabled=true;btn.textContent="Sent to Ravi ✓";
+ S.tasks.unshift({id:id,ico:r.ico,t:r.t,s:"Waiting for Ravi’s OK",st:"wait"});
+ S.apps.unshift({id:id,ico:r.ico,t:"Kamala chose: "+r.t,d:r.d,save:r.save,tid:id});
+ log("Kamala picked: "+r.t);toast("Sent to Ravi for his OK");render();
+}
+function sos(btn){S.alert=true;log("🚨 Kamala reported something urgent");btn.disabled=true;btn.textContent="Ravi has been alerted ✓";render()}
+function tookMed(){S.meds=2;S.chk=now();S.tasks.forEach(function(t){if(t.med){t.s="Taken at "+S.chk;t.st="ok";t.med=0}});log("Kamala took her evening tablet");toast("Marked as taken. Ravi can see it.");render()}
+function decide(id,yes){
+ var a=S.apps.filter(function(x){return x.id===id})[0];S.apps=S.apps.filter(function(x){return x.id!==id});
+ S.tasks.forEach(function(t){if(t.id===id){t.s=yes?"Confirmed by Ravi":"Ravi will call you about this";t.st=yes?"ok":"wait"}});
+ if(yes){S.saved+=a.save;log("Ravi approved: "+a.t);toast("Approved. YourShugo will handle it.")}else{log("Ravi postponed: "+a.t);toast("Left for later.")}
+ render();
+}
+function clearAlert(){S.alert=false;log("Ravi marked the alert as handled");render()}
+function famReq(){var x=$("rx").value.trim();if(!x){$("rx").focus();return}
+ var t=$("rt").value+": "+x;S.tasks.unshift({id:++S.nid,ico:"💌",t:"From Ravi: "+t,s:"YourShugo is arranging this",st:"wait"});
+ log("Ravi requested for Kamala: "+t);$("rx").value="";toast("Sent. It’s on Kamala’s screen.");render()}
+
+function render(){
+ $("tasks").innerHTML=S.tasks.map(function(t){return '<div class="item"><div class="ico">'+t.ico+'</div><div class="t"><b>'+esc(t.t)+'</b><small>'+esc(t.s)+'</small>'+(t.med?'<div class="acts"><button class="btn sm" onclick="tookMed()">Mark as taken</button></div>':'')+'</div><span class="pill '+t.st+'">'+(t.st==="ok"?"Done":"In progress")+'</span></div>'}).join("");
+ $("apps").innerHTML=S.apps.length?S.apps.map(function(a){return '<div class="item"><div class="ico">'+a.ico+'</div><div class="t"><b>'+esc(a.t)+'</b><small>'+esc(a.d)+'</small>'+(a.save?'<div class="save">Saves ₹'+a.save+'</div>':'')+'<div class="acts"><button class="btn sm" onclick="decide('+a.id+',true)">Approve</button><button class="btn sm ghost" onclick="decide('+a.id+',false)">Not now</button></div></div></div>'}).join(""):'<p class="sub">All caught up. 🎉</p>';
+ $("log").innerHTML=S.logs.map(function(l){return "<div><b>"+l[0]+"</b> · "+esc(l[1])+"</div>"}).join("");
+ $("saved").textContent="₹"+S.saved.toLocaleString("en-IN");
+ $("tMeds").textContent=S.meds+" of 2";$("tChk").textContent=S.chk;$("tPend").textContent=S.apps.length;
+ var h=$("fhero");h.style.background=S.alert?"var(--coral)":"";
+ $("fh").textContent=S.alert?"Kamala needs help now":"Kamala is doing fine today";
+ $("fs").textContent=S.alert?"She reported something urgent. Call her first.":(S.apps.length?S.apps.length+" thing"+(S.apps.length>1?"s":"")+" need your OK. Nothing is urgent.":"Everything is on track.");
+ $("clearAlert").style.display=S.alert?"inline-block":"none";
+}
+render();
+</script>
+</body>
+</html>
