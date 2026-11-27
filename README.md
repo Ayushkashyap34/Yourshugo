@@ -16,12 +16,6 @@ One page, two connected screens that share the same live data:
 - **Family dashboard (Ravi's dashboard):** status at a glance, a "Needs your OK" approval queue, activity log, savings tracker, and a way to send requests to the parent.
 - **Everything is linked:** a request in the senior app appears in the family queue; approving it updates the senior's list; marking a tablet as taken updates the dashboard.
 
-## Run it
-
-It is a single static file with no build step.
-
-1. Open `index.html` in a browser, or
-2. Host it with GitHub Pages: Settings -> Pages -> Deploy from branch -> `main` / root.
 
 ## Limitations (it is a prototype)
 
